@@ -1,7 +1,7 @@
 
-  # Arabic News Website
+  # Today Media Website
 
-  This is a code bundle for Arabic News Website. The original project is available at https://www.figma.com/design/EAQeQ4Hs87FxVMzGFSkzfM/Arabic-News-Website.
+  This is a code bundle for TodayMedia Website.  
 
   ## Running the code
 
