@@ -14,12 +14,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetClose,
-} from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "./ui/sheet";
 import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
@@ -30,50 +25,43 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { useTheme } from "./ThemeProvider";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 import logo from "../assets/img/logo.webp";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [mobileSearchOpen, setMobileSearchOpen] =
-    useState(false);
-  const [mobileSearchQuery, setMobileSearchQuery] =
-    useState("");
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [openDropdown, setOpenDropdown] = useState<
-    string | null
-  >(null);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [mobileSearchQuery, setMobileSearchQuery] = useState("");
+  const [isNavSticky, setIsNavSticky] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
-  // Handle scroll to show/hide header
+  // Handle scroll to make navigation sticky
   useEffect(() => {
     const handleScroll = () => {
+      const headerHeight = 200; // Approximate height of top bar + main header
       const currentScrollY = window.scrollY;
 
-      // Show header when scrolling up, hide when scrolling down
-      if (
-        currentScrollY < lastScrollY ||
-        currentScrollY < 100
-      ) {
-        setIsVisible(true);
-      } else if (
-        currentScrollY > lastScrollY &&
-        currentScrollY > 100
-      ) {
-        setIsVisible(false);
+      // Make navigation sticky after scrolling past the header
+      if (currentScrollY > headerHeight) {
+        setIsNavSticky(true);
+      } else {
+        setIsNavSticky(false);
       }
-
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,9 +74,7 @@ export default function Header() {
   const handleMobileSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (mobileSearchQuery.trim()) {
-      navigate(
-        `/search?q=${encodeURIComponent(mobileSearchQuery)}`,
-      );
+      navigate(`/search?q=${encodeURIComponent(mobileSearchQuery)}`);
       setMobileSearchQuery("");
       setMobileSearchOpen(false);
     }
@@ -260,11 +246,9 @@ export default function Header() {
   ];
 
   return (
-    <header
-      className={`bg-background shadow-sm sticky top-0 z-50 border-b border-border transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
-    >
+    <header className="bg-background shadow-sm border-b border-border lg:static sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-[#c90000] text-white py-2">
+      <div className="bg-[#c90000] text-white py-2 lg:block hidden">
         <div className="container mx-auto px-4 flex justify-between items-center text-right">
           <div className="flex gap-4 items-center">
             <Button
@@ -281,15 +265,13 @@ export default function Header() {
             </Button>
           </div>
           <div className="flex gap-4">
-            <span className="text-sm">
-              الخميس 23 أكتوبر 2025
-            </span>
+            <span className="text-sm">الخميس 23 أكتوبر 2025</span>
           </div>
         </div>
       </div>
 
       {/* Main Header */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2 lg:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 lg:hidden">
             <Button
@@ -319,51 +301,140 @@ export default function Header() {
                 </SheetClose>
 
                 <div className="bg-gradient-to-b from-[#c90000] to-[#a00000] p-6 text-white">
-                  <h2 className="text-2xl text-right mb-2">
-                    القائمة الرئيسية
-                  </h2>
+                  <h2 className="text-2xl text-right mb-2">القائمة الرئيسية</h2>
                   <p className="text-sm text-white/80 text-right">
                     تصفح الأقسام
                   </p>
                 </div>
                 <nav className="flex-1 flex flex-col p-4 overflow-y-auto">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.path}
-                      to={category.path}
-                      onClick={() => setIsOpen(false)}
-                      className="text-lg py-2.5 px-4 hover:bg-accent rounded-lg transition-colors text-right border-b border-border last:border-0 group"
-                    >
-                      <span className="group-hover:text-[#c90000] transition-colors">
-                        {category.name}
-                      </span>
-                    </Link>
-                  ))}
+                  <Accordion type="multiple" className="w-full">
+                    {categories.map((category, index) => {
+                      // If no subcategories, render as simple link
+                      if (!category.subcategories) {
+                        return (
+                          <Link
+                            key={category.path}
+                            to={category.path}
+                            onClick={() => setIsOpen(false)}
+                            className="text-lg py-3 px-4 hover:bg-accent rounded-lg transition-colors text-right border-b border-border flex items-center justify-between group"
+                          >
+                            <span className="group-hover:text-[#c90000] transition-colors">
+                              {category.name}
+                            </span>
+                          </Link>
+                        );
+                      }
+
+                      // If has subcategories, render with accordion
+                      return (
+                        <AccordionItem
+                          key={category.path}
+                          value={`item-${index}`}
+                          className="border-b border-border"
+                        >
+                          <AccordionTrigger className="text-lg py-3 px-4 hover:bg-accent hover:no-underline rounded-lg transition-colors text-right hover:text-[#c90000]">
+                            {category.name}
+                          </AccordionTrigger>
+                          <AccordionContent className="pr-2">
+                            <div className="flex flex-col">
+                              {/* Main category link */}
+                              <Link
+                                to={category.path}
+                                onClick={() => setIsOpen(false)}
+                                className="py-2 px-6 text-right hover:bg-accent hover:text-[#c90000] transition-colors rounded"
+                              >
+                                الكل
+                              </Link>
+
+                              {/* Subcategories */}
+                              {category.subcategories.map((sub, subIndex) => {
+                                // If no nested subcategories, render as simple link
+                                if (!sub.subcategories) {
+                                  return (
+                                    <Link
+                                      key={sub.path}
+                                      to={sub.path}
+                                      onClick={() => setIsOpen(false)}
+                                      className="py-2 px-6 text-right hover:bg-accent hover:text-[#c90000] transition-colors rounded"
+                                    >
+                                      {sub.name}
+                                    </Link>
+                                  );
+                                }
+
+                                // If has nested subcategories, render nested accordion
+                                return (
+                                  <Accordion
+                                    key={sub.path}
+                                    type="multiple"
+                                    className="w-full"
+                                  >
+                                    <AccordionItem
+                                      value={`sub-${index}-${subIndex}`}
+                                      className="border-0"
+                                    >
+                                      <AccordionTrigger className="py-2 px-6 hover:bg-accent hover:no-underline rounded transition-colors text-right hover:text-[#c90000] text-base">
+                                        {sub.name}
+                                      </AccordionTrigger>
+                                      <AccordionContent className="pr-2">
+                                        <div className="flex flex-col">
+                                          {/* Sub category link */}
+                                          <Link
+                                            to={sub.path}
+                                            onClick={() => setIsOpen(false)}
+                                            className="py-2 px-8 text-right hover:bg-accent hover:text-[#c90000] transition-colors rounded text-sm"
+                                          >
+                                            الكل
+                                          </Link>
+
+                                          {/* Nested subcategories */}
+                                          {sub.subcategories.map((subSub) => (
+                                            <Link
+                                              key={subSub.path}
+                                              to={subSub.path}
+                                              onClick={() => setIsOpen(false)}
+                                              className="py-2 px-8 text-right hover:bg-accent hover:text-[#c90000] transition-colors rounded text-sm"
+                                            >
+                                              {subSub.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </AccordionContent>
+                                    </AccordionItem>
+                                  </Accordion>
+                                );
+                              })}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      );
+                    })}
+                  </Accordion>
                 </nav>
 
                 {/* Social Icons at bottom */}
                 <div className="border-t border-border p-4 bg-muted/30">
-                  <div className="flex gap-2 justify-end">
+                  <div className="flex gap-2 justify-start">
                     <a
-                      href="#"
+                      href="https://www.facebook.com/TodaymediaT"
                       className="w-9 h-9 bg-[#1877f2] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                     >
                       <Facebook className="w-4 h-4" />
                     </a>
                     <a
-                      href="#"
+                      href="https://x.com/TodaymediaT"
                       className="w-9 h-9 bg-[#1da1f2] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                     >
                       <Twitter className="w-4 h-4" />
                     </a>
                     <a
-                      href="#"
+                      href="https://www.instagram.com/toda.ymedia/"
                       className="w-9 h-9 bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                     >
                       <Instagram className="w-4 h-4" />
                     </a>
                     <a
-                      href="#"
+                      href="https://www.youtube.com/channel/UCrFx2VgF0Pw33-_dC5K8EQg"
                       className="w-9 h-9 bg-[#ff0000] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                     >
                       <Youtube className="w-4 h-4" />
@@ -375,17 +446,10 @@ export default function Header() {
           </div>
 
           <Link to="/" className="flex items-center gap-3">
-            <img
-              src={logo}
-              alt="اليوم ميديا"
-              className="h-16 w-auto"
-            />
+            <img src={logo} alt="اليوم ميديا" className="h-12 lg:h-16 w-auto" />
           </Link>
 
-          <form
-            onSubmit={handleSearch}
-            className="relative hidden md:block"
-          >
+          <form onSubmit={handleSearch} className="relative hidden md:block">
             <input
               type="text"
               placeholder="ابحث عن الأخبار..."
@@ -404,30 +468,20 @@ export default function Header() {
       </div>
 
       {/* Mobile Search Dialog */}
-      <Dialog
-        open={mobileSearchOpen}
-        onOpenChange={setMobileSearchOpen}
-      >
+      <Dialog open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
         <DialogContent className="top-0 translate-y-0 max-w-full w-full rounded-none border-0 p-4">
           <DialogHeader>
-            <DialogTitle className="text-right">
-              بحث
-            </DialogTitle>
+            <DialogTitle className="text-right">بحث</DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground text-right">
               ابحث عن الأخبار التي تهمك
             </DialogDescription>
           </DialogHeader>
-          <form
-            onSubmit={handleMobileSearch}
-            className="relative"
-          >
+          <form onSubmit={handleMobileSearch} className="relative">
             <Input
               type="text"
               placeholder="ابحث عن الأخبار..."
               value={mobileSearchQuery}
-              onChange={(e) =>
-                setMobileSearchQuery(e.target.value)
-              }
+              onChange={(e) => setMobileSearchQuery(e.target.value)}
               className="pr-10 pl-4 py-3 text-lg text-right"
               autoFocus
             />
@@ -442,36 +496,46 @@ export default function Header() {
       </Dialog>
 
       {/* Navigation - Desktop */}
-      <nav className="border-t border-border hidden lg:block bg-background relative">
+      <nav
+        className={`border-t border-border hidden lg:block bg-background transition-all duration-300 ${
+          isNavSticky ? "fixed top-0 left-0 right-0 z-50 shadow-md" : "relative"
+        }`}
+      >
         <div className="container mx-auto px-4">
-          <div className="flex gap-8 justify-start overflow-visible">
-            {categories.map((category, categoryIndex) => (
-              <div
-                key={category.path}
-                className="relative group/main"
-              >
-                <Link
-                  to={category.path}
-                  className="py-4 font-bold text-foreground hover:text-[#c90000] whitespace-nowrap transition-colors flex items-center gap-1"
-                >
-                  {category.name}
-                  {category.subcategories && (
-                    <ChevronDown className="w-4 h-4" />
-                  )}
-                </Link>
+          <div className="flex gap-8 justify-start items-center overflow-visible">
+            {/* Logo - Only visible when sticky */}
+            <Link
+              to="/"
+              className={`transition-all duration-300 ${
+                isNavSticky ? "opacity-100 visible" : "opacity-0 invisible w-0"
+              }`}
+            >
+              {isNavSticky && (
+                <img src={logo} alt="اليوم ميديا" className="h-12 w-auto" />
+              )}
+            </Link>
 
-                {/* First Level Dropdown */}
-                {category.subcategories && (
-                  <div
-                    className="absolute top-full right-0 mt-0 bg-background border border-border shadow-xl rounded-lg min-w-[220px] py-2 opacity-0 invisible group-hover/main:opacity-100 group-hover/main:visible transition-all duration-200 pointer-events-none group-hover/main:pointer-events-auto"
-                    style={{ zIndex: 9999 }}
+            <div className="flex gap-8 justify-start overflow-visible">
+              {categories.map((category, categoryIndex) => (
+                <div key={category.path} className="relative group/main">
+                  <Link
+                    to={category.path}
+                    className="py-4 font-bold text-foreground hover:text-[#c90000] whitespace-nowrap transition-colors flex items-center gap-1"
                   >
-                    {category.subcategories.map(
-                      (sub, subIndex) => (
-                        <div
-                          key={sub.path}
-                          className="relative group/sub"
-                        >
+                    {category.name}
+                    {category.subcategories && (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </Link>
+
+                  {/* First Level Dropdown */}
+                  {category.subcategories && (
+                    <div
+                      className="absolute top-full right-0 mt-0 bg-background border border-border shadow-xl rounded-lg min-w-[220px] py-2 opacity-0 invisible group-hover/main:opacity-100 group-hover/main:visible transition-all duration-200 pointer-events-none group-hover/main:pointer-events-auto"
+                      style={{ zIndex: 9999 }}
+                    >
+                      {category.subcategories.map((sub, subIndex) => (
+                        <div key={sub.path} className="relative group/sub">
                           <Link
                             to={sub.path}
                             className="block px-4 py-2.5 text-right hover:bg-accent hover:text-[#c90000] transition-colors flex items-center justify-between gap-2"
@@ -479,9 +543,7 @@ export default function Header() {
                             {sub.subcategories && (
                               <ChevronLeft className="w-4 h-4 flex-shrink-0" />
                             )}
-                            <span className="flex-1">
-                              {sub.name}
-                            </span>
+                            <span className="flex-1">{sub.name}</span>
                           </Link>
 
                           {/* Second Level Dropdown - Smart positioning based on parent position */}
@@ -494,26 +556,24 @@ export default function Header() {
                               }`}
                               style={{ zIndex: 9999 }}
                             >
-                              {sub.subcategories.map(
-                                (subSub) => (
-                                  <Link
-                                    key={subSub.path}
-                                    to={subSub.path}
-                                    className="block px-4 py-2.5 text-right hover:bg-accent hover:text-[#c90000] transition-colors"
-                                  >
-                                    {subSub.name}
-                                  </Link>
-                                ),
-                              )}
+                              {sub.subcategories.map((subSub) => (
+                                <Link
+                                  key={subSub.path}
+                                  to={subSub.path}
+                                  className="block px-4 py-2.5 text-right hover:bg-accent hover:text-[#c90000] transition-colors"
+                                >
+                                  {subSub.name}
+                                </Link>
+                              ))}
                             </div>
                           )}
                         </div>
-                      ),
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </nav>

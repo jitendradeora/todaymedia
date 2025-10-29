@@ -177,7 +177,7 @@ export default function HomePage() {
                 <ImageWithFallback
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="p-4 text-right flex flex-col flex-grow">
                   <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold flex-grow">
@@ -199,7 +199,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       {/* SEO Meta Tags */}
       <SEO
         title="اليوم ميديا - موقع إخباري شامل | آخر الأخبار العربية والعالمية"
@@ -218,7 +218,7 @@ export default function HomePage() {
       />
 
       {/* Breaking News Bar */}
-      <div className="bg-[#efefef] dark:bg-gray-800 text-[#0a0a0a] dark:text-white py-2 sticky top-0 z-40 md:static">
+      <div className="bg-[#efefef] dark:bg-gray-800 text-[#0a0a0a] dark:text-white py-2">
         <div className="container mx-auto px-4">
           <div
             className="flex items-center gap-3 overflow-x-auto"
@@ -254,10 +254,10 @@ export default function HomePage() {
                       <div className="space-y-4 lg:space-y-6">
                         {/* Category Badge with Icon */}
                         <div className="flex items-center gap-2 justify-start">
-                          <div className="w-12 h-12 bg-[#c90000] rounded-full flex items-center justify-center shadow-lg">
-                            <TrendingUp className="w-6 h-6 text-white" />
+                          <div className="w-8 h-8 lg:w-12 lg:h-12 bg-[#c90000] rounded-full flex items-center justify-center shadow-lg">
+                            <TrendingUp className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                           </div>
-                          <Badge className="bg-[#c90000] hover:bg-[#a00000] text-white px-4 py-2 text-sm shadow-lg">
+                          <Badge className="bg-[#c90000] hover:bg-[#a00000] text-white px-2 py-1 lg:px-4 lg:py-2 text-xs lg:text-sm shadow-lg">
                             {article.category}
                           </Badge>
                         </div>
@@ -293,8 +293,8 @@ export default function HomePage() {
 
                         {/* Read More Button */}
                         <Link to={`/article/${article.id}`}>
-                          <button className="bg-[#c90000] hover:bg-[#a00000] text-white px-6 lg:px-8 py-2 lg:py-3 rounded-lg transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2 ml-auto">
-                            <ChevronRight className="w-5 h-5" />
+                          <button className="bg-[#c90000] hover:bg-[#a00000] text-white px-4 lg:px-8 py-1.5 lg:py-3 rounded-lg transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-1 lg:gap-2 ml-auto text-sm lg:text-base">
+                            <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />
                             <span>اقرأ المزيد</span>
                           </button>
                         </Link>
@@ -361,7 +361,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="container mx-auto px-4 py-8">
+        <div className="gridholder mx-auto px-4 py-8">
           {/* أخبار العالم - 3 Grid Articles */}
           {worldNews.length > 0 && (
             <div className="bg-background py-12">
@@ -380,7 +380,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="p-4 text-right flex flex-col flex-grow">
                           <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold flex-grow">
@@ -428,7 +428,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="p-4 text-right flex flex-col flex-grow">
                           <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold flex-grow">
@@ -478,7 +478,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-48 object-cover"
+                          className="w-full h-48 lg:h-58 object-cover"
                         />
                         <div className="p-4 text-right flex flex-col flex-grow">
                           <h3 className="mb-2 leading-snug hover:text-[#c90000] transition-colors font-semibold line-clamp-2 flex-grow">
@@ -529,7 +529,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="p-4 text-right flex flex-col flex-grow">
                           <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold flex-grow">
@@ -615,7 +615,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="p-4 text-right flex flex-col flex-grow">
                           <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold flex-grow">
@@ -681,7 +681,7 @@ export default function HomePage() {
                         <ImageWithFallback
                           src={video.thumbnail}
                           alt={video.title}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                           <div className="w-16 h-16 bg-[#c90000] hover:bg-[#a00000] rounded-full flex items-center justify-center text-white transition-colors">

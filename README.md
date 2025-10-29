@@ -1,7 +1,7 @@
 
-  # Today Media Website
+  # TodayMedia
 
-  This is a code bundle for TodayMedia Website.  
+  This is a code bundle for TodayMedia.  
 
   ## Running the code
 

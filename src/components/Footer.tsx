@@ -52,7 +52,7 @@ export default function Footer() {
             {/* About */}
             <div className="text-right">
               <h3 className="text-xl mb-4 text-red-500">
-                أخبار اليوم
+                اليوم ميديا
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 موقع إخباري شامل يقدم آخر الأخبار العربية
@@ -249,37 +249,64 @@ export default function Footer() {
             {/* Social Media */}
             <div className="text-right">
               <h4 className="mb-4">تابعنا</h4>
-              <div className="flex gap-3 justify-start">
+              <div className="flex gap-3 justify-start mb-6">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/TodaymediaT"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
                 >
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://x.com/TodaymediaT"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
                 >
                   <Twitter className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/toda.ymedia/"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.youtube.com/channel/UCrFx2VgF0Pw33-_dC5K8EQg"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
                 >
                   <Youtube className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="mailto:info@todaymedia.net"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
                 >
                   <Mail className="w-5 h-5" />
                 </a>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-gray-700 mb-4"></div>
+
+              {/* Additional Links - Inline */}
+              <div className="flex flex-wrap gap-2 items-center text-sm">
+                <Link
+                  to="/about"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  من نحن
+                </Link>
+                <span className="text-gray-600">•</span>
+                <Link
+                  to="/contact"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  اتصل بنا
+                </Link>
+                <span className="text-gray-600">•</span>
+                <Link
+                  to="/privacy-policy"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  سياسة الخصوصية
+                </Link>
               </div>
             </div>
           </div>

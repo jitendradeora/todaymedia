@@ -21,7 +21,9 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -57,7 +59,7 @@ export default function ContactPage() {
         canonicalUrl="https://todaymedia.net/contact"
       />
       <Header />
-      
+
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 py-8 max-w-[85.375rem]">
           {/* Page Header */}
@@ -66,7 +68,8 @@ export default function ContactPage() {
               اتصل بنا
             </h1>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              نحن سعداء بالتواصل معك. يمكنك إرسال استفساراتك واقتراحاتك من خلال النموذج أدناه وسنقوم بالرد عليك في أقرب وقت ممكن
+              نرحب بتعليقاتكم واقتراحاتكم لجميع الاستفسارات.. لا
+              تتردد بالتواصل معنا
             </p>
           </div>
 
@@ -98,10 +101,16 @@ export default function ContactPage() {
               <h3 className="text-xl mb-2 text-gray-900 dark:text-white">
                 الهاتف
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm" dir="ltr">
+              <p
+                className="text-gray-600 dark:text-gray-400 text-sm"
+                dir="ltr"
+              >
                 +44 20 1234 5678
               </p>
-              <p className="text-gray-600 dark:text-gray-400 text-sm" dir="ltr">
+              <p
+                className="text-gray-600 dark:text-gray-400 text-sm"
+                dir="ltr"
+              >
                 +44 20 8765 4321
               </p>
             </div>
@@ -130,11 +139,18 @@ export default function ContactPage() {
               <h2 className="text-2xl mb-6 text-right text-gray-900 dark:text-white">
                 أرسل لنا رسالة
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="text-right">
-                    <Label htmlFor="name" className="block mb-2">
-                      الاسم الكامل <span className="text-red-500">*</span>
+                    <Label
+                      htmlFor="name"
+                      className="block mb-2"
+                    >
+                      الاسم الكامل{" "}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="name"
@@ -149,8 +165,12 @@ export default function ContactPage() {
                   </div>
 
                   <div className="text-right">
-                    <Label htmlFor="email" className="block mb-2">
-                      البريد الإلكتروني <span className="text-red-500">*</span>
+                    <Label
+                      htmlFor="email"
+                      className="block mb-2"
+                    >
+                      البريد الإلكتروني{" "}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="email"
@@ -167,7 +187,10 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="text-right">
-                    <Label htmlFor="phone" className="block mb-2">
+                    <Label
+                      htmlFor="phone"
+                      className="block mb-2"
+                    >
                       رقم الهاتف
                     </Label>
                     <Input
@@ -182,8 +205,12 @@ export default function ContactPage() {
                   </div>
 
                   <div className="text-right">
-                    <Label htmlFor="subject" className="block mb-2">
-                      الموضوع <span className="text-red-500">*</span>
+                    <Label
+                      htmlFor="subject"
+                      className="block mb-2"
+                    >
+                      الموضوع{" "}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="subject"
@@ -199,8 +226,12 @@ export default function ContactPage() {
                 </div>
 
                 <div className="text-right">
-                  <Label htmlFor="message" className="block mb-2">
-                    الرسالة <span className="text-red-500">*</span>
+                  <Label
+                    htmlFor="message"
+                    className="block mb-2"
+                  >
+                    الرسالة{" "}
+                    <span className="text-red-500">*</span>
                   </Label>
                   <Textarea
                     id="message"
@@ -239,9 +270,15 @@ export default function ContactPage() {
                 ملاحظة مهمة
               </h3>
               <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                <li>• سنقوم بالرد على رسالتك خلال 24-48 ساعة عمل</li>
-                <li>• تأكد من إدخال بريد إلكتروني صحيح للتواصل معك</li>
-                <li>• للاستفسارات العاجلة، يرجى التواصل عبر الهاتف</li>
+                <li>
+                  • سنقوم بالرد على رسالتك خلال 24-48 ساعة عمل
+                </li>
+                <li>
+                  • تأكد من إدخال بريد إلكتروني صحيح للتواصل معك
+                </li>
+                <li>
+                  • للاستفسارات العاجلة، يرجى التواصل عبر الهاتف
+                </li>
                 <li>• جميع الحقول المميزة بـ (*) إلزامية</li>
               </ul>
             </div>
