@@ -33,8 +33,7 @@ export default function Footer() {
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
@@ -51,12 +50,10 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* About */}
             <div className="text-right">
-              <h3 className="text-xl mb-4 text-red-500">
-                اليوم ميديا
-              </h3>
+              <h3 className="text-xl mb-4 text-red-500">اليوم ميديا</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                موقع إخباري شامل يقدم آخر الأخبار العربية
-                والعالمية على مدار الساعة
+                موقع إخباري شامل يقدم آخر الأخبار العربية والعالمية على مدار
+                الساعة
               </p>
             </div>
 
@@ -118,10 +115,7 @@ export default function Footer() {
                 <h4 className="mb-4">روابط سريعة</h4>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link
-                      to="/"
-                      className="text-gray-400 hover:text-white"
-                    >
+                    <Link to="/" className="text-gray-400 hover:text-white">
                       الرئيسية
                     </Link>
                   </li>

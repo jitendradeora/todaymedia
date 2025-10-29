@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import SEO, {
-  generateWebsiteSchema,
-  generateOrganizationSchema,
-} from "./SEO";
+import SEO, { generateWebsiteSchema, generateOrganizationSchema } from "./SEO";
 import { articles } from "../data/articles";
 import { videos } from "../data/videos";
 import {
@@ -31,42 +28,28 @@ export default function HomePage() {
   const siteUrl = "https://todaymedia.net"; // Replace with your actual domain
 
   const topArticles = articles.slice(0, 5);
-  const worldNews = articles.filter(
-    (a) => a.categorySlug === "world-news",
-  );
-  const economyNews = articles.filter(
-    (a) => a.categorySlug === "economy",
-  );
+  const worldNews = articles.filter((a) => a.categorySlug === "world-news");
+  const economyNews = articles.filter((a) => a.categorySlug === "economy");
   const middleEastNews = articles.filter(
-    (a) => a.categorySlug === "middle-east",
+    (a) => a.categorySlug === "middle-east"
   );
   const internationalNews = articles.filter(
-    (a) => a.categorySlug === "international",
+    (a) => a.categorySlug === "international"
   );
-  const analysisNews = articles.filter(
-    (a) => a.categorySlug === "analysis",
-  );
-  const varietyNews = articles.filter(
-    (a) => a.categorySlug === "variety",
-  );
-  const healthNews = articles.filter(
-    (a) => a.categorySlug === "health",
-  );
+  const analysisNews = articles.filter((a) => a.categorySlug === "analysis");
+  const varietyNews = articles.filter((a) => a.categorySlug === "variety");
+  const healthNews = articles.filter((a) => a.categorySlug === "health");
   const technologyNews = articles.filter(
-    (a) => a.categorySlug === "technology",
+    (a) => a.categorySlug === "technology"
   );
-  const cultureNews = articles.filter(
-    (a) => a.categorySlug === "culture",
-  );
-  const opinionsNews = articles.filter(
-    (a) => a.categorySlug === "opinions",
-  );
-  const sportsNews = articles.filter(
-    (a) => a.categorySlug === "sports",
-  );
+  const cultureNews = articles.filter((a) => a.categorySlug === "culture");
+  const opinionsNews = articles.filter((a) => a.categorySlug === "opinions");
+  const sportsNews = articles.filter((a) => a.categorySlug === "sports");
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % topArticles.length);
@@ -74,9 +57,28 @@ export default function HomePage() {
 
   const prevSlide = () => {
     setCurrentSlide(
-      (prev) =>
-        (prev - 1 + topArticles.length) % topArticles.length,
+      (prev) => (prev - 1 + topArticles.length) % topArticles.length
     );
+  };
+
+  // Handle touch/swipe gestures for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current - touchEndX.current > 50) {
+      // Swiped left (next slide in RTL)
+      prevSlide();
+    }
+    if (touchEndX.current - touchStartX.current > 50) {
+      // Swiped right (previous slide in RTL)
+      nextSlide();
+    }
   };
 
   // Auto scroll for breaking news
@@ -88,8 +90,7 @@ export default function HomePage() {
         scrollAmount += 1;
         if (
           scrollAmount >=
-          scrollContainer.scrollWidth -
-            scrollContainer.clientWidth
+          scrollContainer.scrollWidth - scrollContainer.clientWidth
         ) {
           scrollAmount = 0;
         }
@@ -206,10 +207,7 @@ export default function HomePage() {
         description="اليوم ميديا هو موقع إلكتروني إخباري يعرض مختلف الأخبار السياسية والمنوعة. تغطية شاملة للشرق الأوسط، الاقتصاد، الرياضة، التكنولوجيا والثقافة"
         canonical={siteUrl}
         ogType="website"
-        ogImage={
-          topArticles[0]?.image ||
-          `${siteUrl}/assets/img/logo.webp`
-        }
+        ogImage={topArticles[0]?.image || `${siteUrl}/assets/img/logo.webp`}
         ogImageAlt="اليوم ميديا - موقع إخباري شامل"
         schema={[
           generateWebsiteSchema(siteUrl),
@@ -227,9 +225,7 @@ export default function HomePage() {
             <span className="px-3 py-1 bg-[#c90000] text-white text-sm shrink-0 font-bold sticky right-0 md:static">
               عاجل
             </span>
-            <p className="text-sm whitespace-nowrap">
-              {topArticles[0]?.title}
-            </p>
+            <p className="text-sm whitespace-nowrap">{topArticles[0]?.title}</p>
           </div>
         </div>
       </div>
@@ -238,14 +234,17 @@ export default function HomePage() {
         {/* Hero Slider */}
         <section className="container mx-auto px-4 py-8">
           <div className="relative">
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 shadow-2xl min-h-[600px] lg:h-[600px] mb-4 lg:mb-0">
+            <div
+              className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 shadow-2xl min-h-[600px] lg:h-[600px] mb-4 lg:mb-0"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {topArticles.map((article, index) => (
                 <div
                   key={article.id}
                   className={`absolute inset-0 transition-opacity duration-500 ${
-                    index === currentSlide
-                      ? "opacity-100"
-                      : "opacity-0"
+                    index === currentSlide ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <div className="grid lg:grid-cols-5 gap-0 h-full">
