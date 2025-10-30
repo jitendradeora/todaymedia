@@ -469,13 +469,25 @@ export default function Header() {
 
       {/* Mobile Search Dialog */}
       <Dialog open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
-        <DialogContent className="top-0 translate-y-0 max-w-full w-full rounded-none border-0 p-4">
+        <DialogContent
+          className="top-0 translate-y-0 max-w-full w-full rounded-none border-0 p-4 [&>button]:hidden"
+          onInteractOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+          aria-describedby="mobile-search-description"
+        >
+          {/* Custom left close button */}
+          <button
+            onClick={() => setMobileSearchOpen(false)}
+            className="absolute left-4 top-4 z-10 text-muted-foreground hover:text-foreground transition-colors cursor-pointer !block"
+          >
+            <X className="w-6 h-6" />
+          </button>
           <DialogHeader>
             <DialogTitle className="text-right">بحث</DialogTitle>
-            <DialogDescription className="text-sm text-muted-foreground text-right">
-              ابحث عن الأخبار التي تهمك
-            </DialogDescription>
           </DialogHeader>
+          <DialogDescription className="text-sm text-muted-foreground text-right">
+            ابحث عن الأخبار التي تهمك
+          </DialogDescription>
           <form onSubmit={handleMobileSearch} className="relative">
             <Input
               type="text"

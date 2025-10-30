@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Clock } from 'lucide-react';
-import { Badge } from './ui/badge';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Link } from "react-router-dom";
+import { Clock } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface Article {
   id: number;
@@ -20,10 +20,12 @@ export default function NewsCard(article: Article) {
         <ImageWithFallback
           src={article.image}
           alt={article.title}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-48 lg:h-58 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="p-4 text-right flex flex-col flex-grow">
-          <Badge variant="secondary" className="mb-2 self-start">{article.category}</Badge>
+          <Badge variant="secondary" className="mb-2 self-start">
+            {article.category}
+          </Badge>
           <h3 className="mb-2 leading-snug group-hover:text-[#c90000] transition-colors line-clamp-2 font-semibold">
             {article.title}
           </h3>
