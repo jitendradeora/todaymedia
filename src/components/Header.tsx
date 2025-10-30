@@ -9,6 +9,7 @@ import {
   Instagram,
   Youtube,
   X,
+  Mail,
   ChevronDown,
   ChevronRight,
   ChevronLeft,
@@ -279,6 +280,7 @@ export default function Header() {
               size="icon"
               className="md:hidden"
               onClick={() => setMobileSearchOpen(true)}
+              aria-label="فتح البحث"
             >
               <Search className="w-6 h-6" />
             </Button>
@@ -286,7 +288,7 @@ export default function Header() {
             {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" aria-label="فتح القائمة">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -418,26 +420,45 @@ export default function Header() {
                     <a
                       href="https://www.facebook.com/TodaymediaT"
                       className="w-9 h-9 bg-[#1877f2] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                      aria-label="تابعنا على فيسبوك"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Facebook className="w-4 h-4" />
                     </a>
                     <a
                       href="https://x.com/TodaymediaT"
                       className="w-9 h-9 bg-[#1da1f2] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                      aria-label="تابعنا على تويتر"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Twitter className="w-4 h-4" />
                     </a>
                     <a
                       href="https://www.instagram.com/toda.ymedia/"
                       className="w-9 h-9 bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                      aria-label="تابعنا على إنستغرام"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Instagram className="w-4 h-4" />
                     </a>
                     <a
                       href="https://www.youtube.com/channel/UCrFx2VgF0Pw33-_dC5K8EQg"
                       className="w-9 h-9 bg-[#ff0000] rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                      aria-label="تابعنا على يوتيوب"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Youtube className="w-4 h-4" />
+                    </a>
+                    <a
+                      href="mailto:info@todaymedia.net"
+                      className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                      aria-label="راسلنا عبر البريد الإلكتروني"
+                    >
+                      <Mail className="w-5 h-5" />
                     </a>
                   </div>
                 </div>

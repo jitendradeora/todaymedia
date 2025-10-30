@@ -247,30 +247,43 @@ export default function Footer() {
                 <a
                   href="https://www.facebook.com/TodaymediaT"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
+                  aria-label="تابعنا على فيسبوك"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
                   href="https://x.com/TodaymediaT"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
+                  aria-label="تابعنا على تويتر"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Twitter className="w-5 h-5" />
                 </a>
                 <a
                   href="https://www.instagram.com/toda.ymedia/"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
+                  aria-label="تابعنا على إنستغرام"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
                   href="https://www.youtube.com/channel/UCrFx2VgF0Pw33-_dC5K8EQg"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
+                  aria-label="تابعنا على يوتيوب"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Youtube className="w-5 h-5" />
                 </a>
                 <a
                   href="mailto:info@todaymedia.net"
                   className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition-colors"
+                  aria-label="راسلنا عبر البريد الإلكتروني"
                 >
                   <Mail className="w-5 h-5" />
                 </a>
